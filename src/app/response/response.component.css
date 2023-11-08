@@ -1,0 +1,15 @@
+.chat-bubble-bot {
+    margin-bottom: 12px;
+    border-radius: 10px;
+    clear: both;
+}
+  
+.bot {
+    font-weight: bold;
+    color: red;
+}
+  
+.message-bot {
+    margin-top: 5px;
+}
+  

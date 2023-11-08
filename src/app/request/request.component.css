@@ -1,0 +1,14 @@
+.chat-bubble-user {
+    margin-bottom: 12px;
+    border-radius: 10px;
+    clear: both;
+}
+  
+.user {
+    font-weight: bold;
+    color: #007bff;
+}
+  
+.message-user {
+    margin-top: 5px;
+}
