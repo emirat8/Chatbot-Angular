@@ -1,16 +1,17 @@
-<div class="container d-flex justify-content-center pt-5 pb-5 mb-5 scrollable-div" #scrollableDiv>
+<div class="container d-flex justify-content-center pt-5 pb-5 mb-5" #scrollableDiv>
     <div class="col-8">
-        <div >
+        <div>
             <div #dynamicBubble></div>
+            <app-loading></app-loading>
         </div>
     </div>
     <div class="position-fixed col-12" style="bottom: 0;left: 0px;">
         <div class="container  d-flex justify-content-center ">
             <div class="col-lg-8">
                 <form (ngSubmit)="askQuestion()" method="post">
-                    <div class="input-group mb-3">
-                        <textarea type="text" [(ngModel)]="question" class="form-control" (keydown.enter)="askQuestionEnter($event)" placeholder="Tanyakan sesuatu" name="question" autocomplete="off"></textarea>
-                        <button class="btn btn-success" type="submit" >Kirim</button>
+                    <div class="input-group mb-3 shadow-box">
+                        <textarea [appAutoFocus]="!isWaitingForResponse" type="text" [(ngModel)]="question" [disabled]="isWaitingForResponse" class="form-control" (keydown.enter)="askQuestionEnter($event)" placeholder="Tanyakan sesuatu" name="question" autocomplete="off"></textarea>
+                        <button class="btn custom-submit-button" [disabled]="isWaitingForResponse" type="submit" >Kirim</button>
                     </div>
                 </form>
             </div>

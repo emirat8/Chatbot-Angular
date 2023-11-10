@@ -8,13 +8,17 @@ import { ChatComponent } from './chat/chat.component';
 import { ResponseComponent } from './response/response.component';
 import { RequestComponent } from './request/request.component';
 import { FormsModule } from '@angular/forms';
+import { LoadingComponent } from './loading/loading.component';
+import { AutoFocusDirective } from './auto-focus.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChatComponent,
     ResponseComponent,
-    RequestComponent
+    RequestComponent,
+    LoadingComponent,
+    AutoFocusDirective,
   ],
   imports: [
     BrowserModule,

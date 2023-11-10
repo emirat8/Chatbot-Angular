@@ -2,18 +2,17 @@
     margin-bottom: 12px;
     border-radius: 10px 10px 10px 0px;
     clear: both;
-    background-color: gray; /* Warna latar belakang bubble chat */
-    color: #fff; /* Warna teks pada bubble chat */
-    padding: 10px; /* Jarak antara teks dan tepi bubble chat */
-    max-width: 70%; /* Lebar maksimum bubble chat sesuai kebutuhan */
+    background-color: #f0f0f0; /* Warna latar belakang bubble chat yang lebih terang */
+    color: #333; /* Warna teks gelap untuk kontras yang lebih baik */
+    padding: 10px;
+    max-width: 70%;
 }
   
 .bot {
     font-weight: bold;
-    color: red;
+    color: #0047ab; /* Warna biru tua untuk nama bot */
 }
   
 .message-bot {
     margin-top: 5px;
 }
-  

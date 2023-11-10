@@ -2,15 +2,15 @@
     margin-bottom: 12px;
     border-radius: 10px 10px 0px 10px;
     clear: both;
-    background-color: #007bff; /* Warna latar belakang bubble chat */
-    color: #fff; /* Warna teks pada bubble chat */
-    padding: 10px; /* Jarak antara teks dan tepi bubble chat */
-    max-width: 70%; /* Lebar maksimum bubble chat sesuai kebutuhan */
+    background-color: #e7f5ff; /* Biru muda */
+    color: #333; /* Warna teks abu-abu gelap */
+    padding: 10px;
+    max-width: 70%;
 }
   
 .user {
     font-weight: bold;
-    color: #FFFFFF;
+    color: #333; /* Warna teks abu-abu gelap untuk kontras */
 }
   
 .message-user {
