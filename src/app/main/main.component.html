@@ -1,0 +1,10 @@
+<div class="container d-flex justify-content-center">
+    <div class="d-flex justify-content-center position-fixed">
+        <div class="slider">
+            <button class="slide-btn btn" [class.active]="showChat == 1" (click)="showWhatChat(1)"><strong>Static</strong></button>
+            <button class="slide-btn btn" [class.active]="showChat == 2" (click)="showWhatChat(2)"><strong>Dynamic</strong></button>
+        </div>
+    </div>
+</div>
+<app-chat [ngClass]="{'d-block': showChat==1,'d-none': showChat!=1}"></app-chat>
+<app-chat2  [ngClass]="{'d-block': showChat==2,'d-none': showChat!=2}"></app-chat2>

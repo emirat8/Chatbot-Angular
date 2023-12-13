@@ -1,0 +1,30 @@
+.slider {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  background-color: #e6f7ff; /* Light blue background for the slider */
+  border: 1px solid #99ccff; /* Lighter blue border for a subtle effect */
+  border-radius: 24px; /* Rounded corners for the slider */
+  height: fit-content;
+}
+
+.slide-btn {
+  padding: 6px 18px;
+  border: none;
+  background-color: #e6f7ff; /* Light blue to match the slider background */
+  color: #003366; /* Dark blue text for better readability */
+  cursor: pointer;
+  transition:  left 2s ease, width 2s ease; /* Smooth transition for background color */
+  outline: none; /* Removes the outline to keep the design clean */
+  border-radius: 24px; /* Rounded corners for the slider */
+}
+
+.slide-btn.active {
+  background-color: #3399ff; /* A different shade of blue for the active button or on hover */
+  color: white; /* White text for better contrast */
+}
+
+/* Additional styles to ensure consistency across browsers */
+.slide-btn:focus {
+  outline: none;
+}

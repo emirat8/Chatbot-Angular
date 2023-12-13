@@ -10,6 +10,9 @@ import { RequestComponent } from './request/request.component';
 import { FormsModule } from '@angular/forms';
 import { LoadingComponent } from './loading/loading.component';
 import { AutoFocusDirective } from './auto-focus.directive';
+import { Chat2Component } from './chat2/chat2.component';
+import { MainComponent } from './main/main.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,9 @@ import { AutoFocusDirective } from './auto-focus.directive';
     RequestComponent,
     LoadingComponent,
     AutoFocusDirective,
+    Chat2Component,
+    MainComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

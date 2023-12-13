@@ -53,7 +53,7 @@ export class ChatComponent {
         }, 500);
       }
 
-      this.chatService.post(questionTemp, "").subscribe((
+      this.chatService.postForStatic(questionTemp).subscribe((
         resp: any) => {
           if (resp.status === 200) {
             if (this.dynamicBubble) {

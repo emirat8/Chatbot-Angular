@@ -1,0 +1,10 @@
+h5 {
+    background-color: rgba(255, 255, 255, 0.5); /* Latar belakang putih dengan transparansi */
+    color: #000; /* Warna teks hitam */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Bayangan teks untuk peningkatan kontras */
+    font-size: 1.25rem; /* Ukuran font yang lebih besar */
+    font-weight: bold; /* Font berat */
+    padding: 5px; /* Padding di sekitar teks */
+    margin-top: 10px; /* Margin di atas nama */
+    display: inline-block; /* Pastikan latar belakang hanya sekitar teks */
+}

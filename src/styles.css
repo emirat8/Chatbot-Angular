@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    background-image: url('assets/agent.png');
+    background-size: 100%;
+    background-repeat: repeat;
+    background-attachment: fixed; /* Jika Anda ingin background tetap pada tempatnya saat di-scroll */
+}

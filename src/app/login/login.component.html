@@ -1,0 +1,10 @@
+<div class="container pt-5  " #scrollableDiv style="height: 100%;" >
+  <div class="col-12 d-flex justify-content-center align-items-center" id="test"style="height: 80%; scrollbar-width: none !important;">
+      <form class="col-6" (submit)="auth()">
+        <img src="../../assets/bcafinancelogo.png" class="img-fluid mb-5">
+        <input type="text" class="form-control" name="username" placeholder="Username" [(ngModel)]="user.username">
+        <input type="password" class="form-control my-md-2 my-1" name="password" placeholder="Password" [(ngModel)]="user.password">
+        <button type="submit" class="form-control my-md-2 my-1 btn-primary btn">Login</button>
+      </form>
+  </div>
+</div>
