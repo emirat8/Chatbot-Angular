@@ -13,6 +13,8 @@ import { AutoFocusDirective } from './auto-focus.directive';
 import { Chat2Component } from './chat2/chat2.component';
 import { MainComponent } from './main/main.component';
 import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,13 +27,15 @@ import { LoginComponent } from './login/login.component';
     Chat2Component,
     MainComponent,
     LoginComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 
 @Component({
@@ -11,8 +11,12 @@ export class AppComponent {
   token: string | null = "";
   fullName: string | null = "";
   isLogin: string | null | undefined
+  withTemplate: boolean = true
 
   ngOnInit() {
+    if (window.location.href.includes("/dashboard")){
+      this.withTemplate = false
+    }
     this.checkUrl()
     this.token = localStorage.getItem("token")
     if(this.token){
@@ -21,8 +25,6 @@ export class AppComponent {
       console.log("Full Name : ", this.fullName);
     }
   }
-
-  constructor(private router:Router){}
 
   checkUrl(){
     return this.isLogin = localStorage.getItem("isLogin")

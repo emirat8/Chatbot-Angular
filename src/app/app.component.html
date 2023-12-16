@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+<div *ngIf="withTemplate; else withoutTemplate" class="d-flex justify-content-center align-items-center" style="height: 100vh;">
     <div class="col-3 d-flex justify-content-center align-items-center p-5 flex-column text-center" *ngIf="checkUrl()=='1'">
         <img src="../assets/agent.gif" alt="" class="img-fluid rounded-circle" style="max-width: 200px;">
         <h5>CICILIN</h5>
@@ -11,3 +11,6 @@
         <h5>{{fullName}}</h5>
     </div>
 </div>
+<ng-template #withoutTemplate>
+    <router-outlet></router-outlet>
+</ng-template>
