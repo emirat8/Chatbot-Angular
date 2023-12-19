@@ -15,6 +15,7 @@ import { MainComponent } from './main/main.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CreateFunctionComponent } from './create-function/create-function.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MainComponent,
     LoginComponent,
     DashboardComponent,
+    CreateFunctionComponent,
   ],
   imports: [
     BrowserModule,

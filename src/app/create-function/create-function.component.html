@@ -1,0 +1,33 @@
+<div style="height: 100vh; width: 100vw;" class="dashboard">
+    <div class="container">
+        <form [formGroup]="form">
+            <div>
+              <input formControlName="name" placeholder="Function Name">
+              <input formControlName="description" placeholder="Function Description">
+            </div>
+            
+            <div formArrayName="properties">
+              <div *ngFor="let property of properties.controls; let i=index" [formGroupName]="i">
+                <input formControlName="key" placeholder="Property Key">
+                <select formControlName="type">
+                  <option value="string">String</option>
+                  <option value="integer">Integer</option>
+                </select>
+                <input formControlName="description" placeholder="Property Description">
+                <!-- Checkbox untuk menandai properti sebagai 'required' -->
+                <label>
+                  <input type="checkbox" (change)="updateRequired($event, property.value.key)">
+                  Required
+                </label>
+                <button type="button" (click)="removeProperty(i)">Remove</button>
+              </div>
+            </div>
+            <button type="button" (click)="addProperty()">Add Property</button>
+
+            <input type="file" (change)="onFileSelected($event)">
+            
+            <button type="button" (click)="submit()">Submit</button>
+        </form>
+        <app-loading></app-loading>
+    </div>  
+</div>

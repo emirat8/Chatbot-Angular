@@ -5,8 +5,10 @@ import { Chat2Component } from './chat2/chat2.component';
 import { ChatComponent } from './chat/chat.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { CreateFunctionComponent } from './create-function/create-function.component';
 
-const routes: Routes = [{
+const routes: Routes = [
+  {
     path: '',
     component: Chat2Component,
   },
@@ -17,11 +19,15 @@ const routes: Routes = [{
   {
     path: 'dashboard',
     component: DashboardComponent,
-  }
+  },
+  {
+    path: 'dashboard/create',
+    component: CreateFunctionComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
