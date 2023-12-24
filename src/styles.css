@@ -2,6 +2,5 @@
 body {
     background-image: url('assets/agent.png');
     background-size: 100%;
-    background-repeat: repeat;
     background-attachment: fixed; /* Jika Anda ingin background tetap pada tempatnya saat di-scroll */
 }

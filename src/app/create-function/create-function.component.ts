@@ -109,7 +109,7 @@ export class CreateFunctionComponent {
 
         if (this.selectedFile) {
           this.toolFunctionService
-            .postForFile(result.name, this.selectedFile)
+            .postForFile(result.name, this.selectedFile, resp.id)
             .subscribe({
               next: (resp: any) => {
                 console.log(resp.text);

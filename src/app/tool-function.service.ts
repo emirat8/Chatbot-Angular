@@ -25,10 +25,25 @@ export class ToolFunctionService {
     );
   }
 
-  postForFile(filename: string, file: File): Observable<any> {
+  updateToolFunction(
+    toolFunction: ToolFunction,
+    id: number
+  ): Observable<ToolFunction> {
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+    return this.http.put<ToolFunction>(
+      `${environment.baseURL}/fungsi/${id}`,
+      JSON.stringify(toolFunction),
+      { headers }
+    );
+  }
+
+  postForFile(filename: string, file: File, id: string): Observable<any> {
     const formData = new FormData();
     formData.append('filename', filename);
     formData.append('file', file);
+    formData.append('id', id);
     return this.http.post<any>('http://localhost:5601/upload', formData);
   }
 
