@@ -10,6 +10,19 @@ import { environment } from './environment.developer';
 export class ToolFunctionService {
   constructor(private http: HttpClient) {}
 
+  getSystemPrompt(): Observable<String> {
+    return this.http.get(`${environment.baseURL}/prompt`, {
+      responseType: 'text',
+    });
+  }
+
+  updateSystemPrompt(newSystemPrompt: String): Observable<string> {
+    return this.http.put<string>(
+      `${environment.baseURL}/prompt`,
+      newSystemPrompt
+    );
+  }
+
   getToolFunctions(): Observable<any> {
     return this.http.get<any>(`${environment.baseURL}/fungsi`);
   }

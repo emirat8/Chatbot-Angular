@@ -48,8 +48,12 @@ export class DashboardComponent implements OnInit {
 
   selectedFile: File | null = null;
 
+  systemPrompt: String = '';
+  newSystemPrompt: String = '';
+
   @ViewChild('updateModal') updateModal: ElementRef | undefined;
   @ViewChild('createModal') createModal: ElementRef | undefined;
+  @ViewChild('systemPromptModal') systemPromptModal: ElementRef | undefined;
 
   form: FormGroup;
 
@@ -80,6 +84,12 @@ export class DashboardComponent implements OnInit {
         });
 
         console.log('Data with Property Keys:', this.listData);
+      },
+    });
+
+    this.toolFunctionService.getSystemPrompt().subscribe({
+      next: (resp: any) => {
+        this.systemPrompt = resp;
       },
     });
   }
@@ -319,6 +329,34 @@ export class DashboardComponent implements OnInit {
         console.error('Error fetching data for update:', error);
       },
     });
+  }
+
+  openSystemPrompt() {
+    this.modalService.open(this.systemPromptModal);
+    this.newSystemPrompt = this.systemPrompt;
+  }
+
+  updateSystemPrompt() {
+    this.toolFunctionService
+      .updateSystemPrompt(this.newSystemPrompt)
+      .subscribe({
+        next: (resp: any) => {
+          console.log(resp);
+        },
+        error: (error) => {
+          this.loadingService.hide();
+          console.error(error);
+        },
+        complete: () => {
+          this.loadingService.hide();
+          this.modalService.dismissAll();
+          this.toolFunctionService.getSystemPrompt().subscribe({
+            next: (resp: any) => {
+              this.systemPrompt = resp;
+            },
+          });
+        },
+      });
   }
 
   isRequired(key: string): boolean {

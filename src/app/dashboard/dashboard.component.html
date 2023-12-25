@@ -1,5 +1,16 @@
 <div class="d-flex align-items-center justify-content-center">
   <div class="container mt-5">
+    <div class="card mb-3 shadow-box">
+      <div class="card-body">
+        <h3 class="card-title">
+          System Prompt
+        </h3>
+        <p class="card-text">
+          {{systemPrompt}}
+        </p>
+        <button type="button" class="btn btn-info mt-3" (click)="openSystemPrompt()">Ubah</button>
+      </div>
+    </div>
     <button type="button" class="btn btn-success mb-3" (click)="openCreateModal()">Buat Function</button>
     <!-- Loop untuk setiap item dalam listData -->
     <div *ngFor="let item of listData; let i = index" class="card mb-3 shadow-box">
@@ -25,6 +36,29 @@
     </div>
   </div>
 </div>
+
+<ng-template #systemPromptModal let-modal>
+  <div class="loading">
+    <app-loading></app-loading>
+  </div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">
+        Ubah System Prompt
+      </h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="updateSystemPrompt()">
+        <div class="form-group mb-3">
+          <textarea id="systemPrompt" class="form-control" [(ngModel)]="newSystemPrompt" name="systemPrompt"
+            rows="12"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+    </div>
+  </div>
+</ng-template>
 
 <!-- Update Modal Template -->
 <ng-template #updateModal let-modal>

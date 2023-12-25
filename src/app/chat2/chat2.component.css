@@ -21,3 +21,93 @@
 .overflow-y-scroll::-webkit-scrollbar {
   display: none; /* Menyembunyikan scrollbar pada Chrome, Safari, dan Opera */
 }
+
+/* Style untuk panel FAQ */
+.faq-panel {
+  position: fixed;
+  top: 0;
+  right: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #fff; /* Warna latar belakang yang netral */
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  transition: right 0.3s;
+  z-index: 1000;
+}
+
+/* Style saat panel FAQ di-expand */
+.faq-panel.expanded {
+  right: 0;
+}
+
+/* Style untuk list di dalam panel FAQ */
+.faq-panel ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+/* Style untuk setiap item di dalam list */
+.faq-panel ul li {
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  background-color: #f8f9fa;
+  transition: background-color 0.3s;
+}
+
+/* Style untuk item saat di-hover */
+.faq-panel ul li:hover {
+  background-color: #e2e6ea;
+}
+
+/* Button untuk toggle panel FAQ */
+.toggle-faq-btn {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: #ffc107; /* Warna kuning untuk kontras */
+  color: #343a40; /* Warna teks gelap untuk kontras */
+  border: 2px solid #ffffff; /* Border putih */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow untuk kedalaman */
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1001;
+  transition: all 0.3s ease; /* Transisi untuk efek hover */
+}
+
+/* Efek hover untuk tombol */
+.toggle-faq-btn:hover {
+  background-color: #fff; /* Warna latar putih saat hover */
+  color: #007bff; /* Warna teks biru saat hover */
+  transform: translateY(-50%) scale(1.05); /* Meningkatkan ukuran sedikit */
+}
+
+/* Animasi untuk menarik perhatian ke tombol */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.toggle-faq-btn {
+  animation: pulse 2s infinite;
+}
+
+/* Style untuk ikon tanda tanya dalam tombol */
+.toggle-faq-btn::before {
+  display: inline-block;
+  margin-right: 5px;
+  font-size: 16px;
+}
