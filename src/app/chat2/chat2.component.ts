@@ -59,6 +59,9 @@ export class Chat2Component {
     'Bagaimana cara menggunakan chatbot ini?',
     'Siapa nama CMO dan cabang yang mengajukan konsumen atas nama : ',
     'Sudah di antrian urutan keberapa konsumen dengan AppId : ',
+    'Kalau muncul notif time out waktu validasi rekening BCA gimana ya?',
+    'Kalau muncul notif data tidak ditemukan atau data tidak tersedia harus gimana ya?',
+    'Apakah konsumen saya harus ke Credit Analyst kalau Cluster {cluster} Engine Scoring {kondisi_engine_scoring} dengan Total Exposure {nilai_exposure}?',
   ];
 
   toggleFaqPanel(): void {

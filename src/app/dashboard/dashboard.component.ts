@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { ToolFunctionService } from '../tool-function.service';
 import { LoadingService } from '../loading.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { jwtDecode } from 'jwt-decode';
+import { Router } from '@angular/router';
 
 interface FunctionInfo {
   id: number;
@@ -18,7 +20,7 @@ interface FunctionInfo {
     };
     required: string[];
   };
-  propertyKeys?: string[]; // Menambahkan properti tambahan untuk menyimpan kunci
+  propertyKeys?: string[];
 }
 
 interface Data {
@@ -34,7 +36,7 @@ export class DashboardComponent implements OnInit {
   listData: Data[] = [];
   updateData: Data = {
     function: {
-      id: 0, // atau sebuah nilai default yang sesuai
+      id: 0,
       name: '',
       description: '',
       parameters: {
@@ -45,6 +47,8 @@ export class DashboardComponent implements OnInit {
       propertyKeys: [],
     },
   };
+  userId: number = 0;
+  token: string | null = '';
 
   selectedFile: File | null = null;
 
@@ -61,7 +65,8 @@ export class DashboardComponent implements OnInit {
     private fb: FormBuilder,
     private toolFunctionService: ToolFunctionService,
     private loadingService: LoadingService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private route: Router
   ) {
     this.form = this.fb.group({
       id: [''],
@@ -73,25 +78,36 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.toolFunctionService.getToolFunctions().subscribe({
-      next: (resp: any) => {
-        this.listData = resp.data.map((item: Data) => {
-          const propertyKeys = Object.keys(item.function.parameters.properties);
-          return {
-            ...item,
-            function: { ...item.function, propertyKeys },
-          };
-        });
+    this.token = localStorage.getItem('token');
+    if (this.token) {
+      const decodedToken: any = jwtDecode(this.token);
+      this.userId = decodedToken.userId;
+      console.log('User ID : ', this.userId);
 
-        console.log('Data with Property Keys:', this.listData);
-      },
-    });
+      this.toolFunctionService.getToolFunctions().subscribe({
+        next: (resp: any) => {
+          this.listData = resp.data.map((item: Data) => {
+            const propertyKeys = Object.keys(
+              item.function.parameters.properties
+            );
+            return {
+              ...item,
+              function: { ...item.function, propertyKeys },
+            };
+          });
 
-    this.toolFunctionService.getSystemPrompt().subscribe({
-      next: (resp: any) => {
-        this.systemPrompt = resp;
-      },
-    });
+          console.log('Data with Property Keys:', this.listData);
+        },
+      });
+
+      this.toolFunctionService.getSystemPrompt().subscribe({
+        next: (resp: any) => {
+          this.systemPrompt = resp;
+        },
+      });
+    } else {
+      this.route.navigate(['login']);
+    }
   }
 
   onFileSelected(event: Event): void {
@@ -104,13 +120,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  onUploadFile(): void {
-    // Logika untuk mengunggah file
-    console.log('Unggah file di sini');
-  }
-
   deleteItem(index: number, id: number): void {
-    // Hapus item dari array
     this.listData.splice(index, 1);
 
     this.toolFunctionService.deleteToolFunction(id).subscribe({
@@ -133,28 +143,24 @@ export class DashboardComponent implements OnInit {
     }
 
     if (input.checked) {
-      // Kosongkan properties yang ada
       while (this.properties.length !== 0) {
         this.properties.removeAt(0);
       }
 
-      // Tambahkan properti baru
       this.addProperty();
 
-      // Atur nilai dan disable kontrol form
       const lastProperty = this.properties.at(this.properties.length - 1);
       lastProperty.get('key')?.setValue('query');
       lastProperty.get('type')?.setValue('string');
       lastProperty.get('key')?.disable();
       lastProperty.get('type')?.disable();
 
-      // Pastikan 'query' ada di required
       if (!this.isRequired('query')) {
         requiredArray.push(new FormControl('query'));
       }
     } else {
       this.resetPropertiesAndRequired();
-      this.selectedFile = null; // Juga reset file yang dipilih
+      this.selectedFile = null;
     }
   }
 
@@ -205,10 +211,9 @@ export class DashboardComponent implements OnInit {
 
   saveUpdate(): void {
     if (this.form.valid) {
-      this.loadingService.show(); // Tampilkan indikator loading
+      this.loadingService.show();
       const formValue = this.form.getRawValue();
 
-      // Membuat objek 'properties' dari array 'properties'
       const propertiesObj: { [key: string]: any } = {};
       formValue.properties.forEach((prop: any) => {
         propertiesObj[prop.key] = {
@@ -217,7 +222,6 @@ export class DashboardComponent implements OnInit {
         };
       });
 
-      // Membuat payload dalam format yang diinginkan oleh backend API Anda
       const payload = {
         name: formValue.name,
         description: formValue.description,
@@ -228,20 +232,17 @@ export class DashboardComponent implements OnInit {
 
       console.log('PAYLOAD : ', payload);
 
-      // Kirim payload ke server menggunakan service untuk membuat entri baru
       this.toolFunctionService
         .updateToolFunction(payload, formValue.id)
         .subscribe({
           next: (response: any) => {
             console.log('RESPONSE CREATE: ', response.data.id);
             if (this.selectedFile) {
-              // Panggil service dengan file yang dipilih dan nama file
               this.toolFunctionService
                 .postForFile(payload.name, this.selectedFile, response.data.id)
                 .subscribe({
                   next: (response) => {
                     console.log('File berhasil diunggah:', response);
-                    // Lakukan tindakan setelah berhasil mengunggah file
                   },
                   error: (error) => {
                     console.error('Error mengunggah file:', error);
@@ -260,7 +261,6 @@ export class DashboardComponent implements OnInit {
               this.loadingService.hide();
               this.modalService.dismissAll();
             }
-            // ... tambahan kode untuk memperbarui UI atau memberikan umpan balik ke pengguna ...
             this.toolFunctionService.getToolFunctions().subscribe({
               next: (resp: any) => {
                 this.listData = resp.data.map((item: Data) => {
@@ -277,8 +277,7 @@ export class DashboardComponent implements OnInit {
             });
           },
           error: (error) => {
-            this.loadingService.hide(); // Sembunyikan indikator loading
-            // Handle error, seperti menampilkan pesan kesalahan
+            this.loadingService.hide();
             console.error('Error creating new function:', error);
           },
         });
@@ -304,7 +303,7 @@ export class DashboardComponent implements OnInit {
               type: [
                 { value: prop.type, disabled: this.fungsiIniMemilikiDokumen },
               ],
-              description: [prop.description], // Pastikan ini tidak ter-disable
+              description: [prop.description],
             });
           });
 
@@ -320,7 +319,7 @@ export class DashboardComponent implements OnInit {
             this.updateRequired({ target: { checked: true } }, 'query');
           }
 
-          this.modalService.open(this.updateModal); // Buka modal setelah data di-load
+          this.modalService.open(this.updateModal);
         } else {
           console.error('Unexpected response structure:', response);
         }
@@ -391,16 +390,15 @@ export class DashboardComponent implements OnInit {
         }),
       ]),
       required: this.fb.array([]),
-      hasDocument: [false], // Inisialisasi sebagai false
+      hasDocument: [false],
     });
 
-    // Buka modal create
     this.modalService.open(this.createModal);
   }
 
   createFunction(): void {
     if (this.form.valid) {
-      this.loadingService.show(); // Tampilkan indikator loading
+      this.loadingService.show();
 
       const formValue = this.form.getRawValue();
       // Membuat objek 'properties' dari array 'properties'
@@ -412,7 +410,6 @@ export class DashboardComponent implements OnInit {
         };
       });
 
-      // Membuat payload dalam format yang diinginkan oleh backend API Anda
       const payload = {
         name: formValue.name,
         description: formValue.description,
@@ -423,18 +420,15 @@ export class DashboardComponent implements OnInit {
 
       console.log('PAYLOAD : ', payload);
 
-      // Kirim payload ke server menggunakan service untuk membuat entri baru
       this.toolFunctionService.createToolFunction(payload).subscribe({
         next: (response: any) => {
           console.log('RESPONSE CREATE: ', response.data.id);
           if (this.selectedFile) {
-            // Panggil service dengan file yang dipilih dan nama file
             this.toolFunctionService
               .postForFile(payload.name, this.selectedFile, response.data.id)
               .subscribe({
                 next: (response) => {
                   console.log('File berhasil diunggah:', response);
-                  // Lakukan tindakan setelah berhasil mengunggah file
                 },
                 error: (error) => {
                   console.error('Error mengunggah file:', error);
@@ -453,7 +447,6 @@ export class DashboardComponent implements OnInit {
             this.loadingService.hide();
             this.modalService.dismissAll();
           }
-          // ... tambahan kode untuk memperbarui UI atau memberikan umpan balik ke pengguna ...
           this.toolFunctionService.getToolFunctions().subscribe({
             next: (resp: any) => {
               this.listData = resp.data.map((item: Data) => {
@@ -470,8 +463,7 @@ export class DashboardComponent implements OnInit {
           });
         },
         error: (error) => {
-          this.loadingService.hide(); // Sembunyikan indikator loading
-          // Handle error, seperti menampilkan pesan kesalahan
+          this.loadingService.hide();
           console.error('Error creating new function:', error);
         },
       });
@@ -479,19 +471,15 @@ export class DashboardComponent implements OnInit {
   }
 
   resetFormAndData(): void {
-    this.selectedFile = null; // Reset file yang dipilih
-    this.form.reset(); // Reset form
+    this.selectedFile = null;
+    this.form.reset();
 
-    // Setel ulang nilai default untuk form, jika ada
     this.form.patchValue({
       name: '',
       description: '',
       hasDocument: false,
-      // Setel ulang bagian lain dari form sesuai kebutuhan
     });
 
-    // Jika Anda menggunakan FormArray, Anda mungkin juga perlu menginisialisasi ulang
     this.form.setControl('properties', this.fb.array([]));
-    // Ulangi untuk bagian lain dari form jika perlu
   }
 }

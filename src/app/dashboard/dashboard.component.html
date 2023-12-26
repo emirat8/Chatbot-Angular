@@ -1,6 +1,6 @@
 <div class="d-flex align-items-center justify-content-center">
   <div class="container mt-5">
-    <div class="card mb-3 shadow-box">
+    <div class="card mb-5 shadow-box" style="background-color: #ffc107;">
       <div class="card-body">
         <h3 class="card-title">
           System Prompt
@@ -8,30 +8,29 @@
         <p class="card-text">
           {{systemPrompt}}
         </p>
-        <button type="button" class="btn btn-info mt-3" (click)="openSystemPrompt()">Ubah</button>
+        <div class="mt-auto w-100 d-flex justify-content-end">
+          <button type="button" class="btn btn-primary mt-3" (click)="openSystemPrompt()">Ubah</button>
+        </div>
       </div>
     </div>
-    <button type="button" class="btn btn-success mb-3" (click)="openCreateModal()">Buat Function</button>
-    <!-- Loop untuk setiap item dalam listData -->
+    <button type="button" class="btn btn-success mb-3" (click)="openCreateModal()">Buat Function Baru</button>
     <div *ngFor="let item of listData; let i = index" class="card mb-3 shadow-box">
-      <!-- Kelas shadow ditambahkan di sini -->
       <div class="card-body">
         <h3 class="card-title">{{ item.function.name }}</h3>
         <p class="card-text">{{ item.function.description }}</p>
 
-        <!-- Parameter -->
         <h5 class="mb-0">Parameter</h5>
         <ul class="list-group list-group-flush mb-0">
-          <!-- Loop untuk setiap propertyKey -->
           <li *ngFor="let key of item.function.propertyKeys" class="list-group-item">
             <strong>{{ key }}:</strong>
             <p class="mb-0">{{ item.function.parameters.properties[key].description }}</p>
           </li>
         </ul>
 
-        <!-- Tombol Hapus dengan index i -->
-        <button type="button" class="btn btn-danger mt-3" (click)="deleteItem(i, item.function.id)">Hapus</button>
-        <button type="button" class="btn btn-info mt-3" (click)="openUpdate(item.function.id)">Ubah</button>
+        <div class="mt-auto w-100 d-flex justify-content-end">
+          <button type="button" class="btn btn-info" (click)="openUpdate(item.function.id)">Ubah</button>
+          <button type="button" class="btn btn-danger ms-2" (click)="deleteItem(i, item.function.id)">Hapus</button>
+        </div>
       </div>
     </div>
   </div>
@@ -60,7 +59,6 @@
   </div>
 </ng-template>
 
-<!-- Update Modal Template -->
 <ng-template #updateModal let-modal>
   <div class="loading">
     <app-loading></app-loading>
@@ -72,13 +70,11 @@
     </div>
     <div class="modal-body">
       <form [formGroup]="form" class="form-horizontal" autocomplete="off">
-        <!-- Name Input -->
         <div class="form-group mb-3">
           <label for="updateName" class="form-label">Name</label>
           <input type="text" class="form-control" formControlName="name" id="updateName" required>
         </div>
 
-        <!-- Description Input -->
         <div class="form-group mb-3">
           <label for="updateDescription" class="form-label">Description</label>
           <textarea class="form-control" formControlName="description" id="updateDescription" rows="3"
@@ -92,11 +88,10 @@
             dokumen?
           </label>
           <div *ngIf="fungsiIniMemilikiDokumen">
-            <input type="file" (change)="onFileSelected($event)">
+            <input type="file" (change)="onFileSelected($event)" accept=".txt, .pdf">
           </div>
         </div>
 
-        <!-- Dynamic Properties Inputs -->
         <div formArrayName="properties">
           <div *ngFor="let prop of properties.controls; let i = index" [formGroupName]="i" class="card mb-3 p-2">
             <div class="form-group mb-2">
@@ -146,13 +141,11 @@
     </div>
     <div class="modal-body">
       <form [formGroup]="form" class="form-horizontal" autocomplete="off">
-        <!-- Name Input -->
         <div class="form-group mb-3">
           <label for="updateName" class="form-label">Name</label>
           <input type="text" class="form-control" formControlName="name" id="updateName" required>
         </div>
 
-        <!-- Description Input -->
         <div class="form-group mb-3">
           <label for="updateDescription" class="form-label">Description</label>
           <textarea class="form-control" formControlName="description" id="updateDescription" rows="3"
@@ -165,11 +158,10 @@
             Apakah fungsi ini memiliki dokumen?
           </label>
           <div *ngIf="form.get('hasDocument')?.value">
-            <input type="file" (change)="onFileSelected($event)">
+            <input type="file" (change)="onFileSelected($event)" accept=".txt, .pdf">
           </div>
         </div>
 
-        <!-- Dynamic Properties Inputs -->
         <div formArrayName="properties">
           <div *ngFor="let prop of properties.controls; let i = index" [formGroupName]="i" class="card mb-3 p-2">
             <div class="form-group mb-2">
